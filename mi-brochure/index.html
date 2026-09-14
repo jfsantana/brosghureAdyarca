@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Brochure digital interactivo de ADYARCA">
+    <title>ADYARCA | Brochure Digital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&amp;family=Playfair+Display:ital,wght@0,600;1,600&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <main class="brochure-shell">
+        <header class="topbar">
+            <a class="brand" href="index.html" aria-label="ADYARCA, inicio">
+                <span class="brand-mark">A</span>
+                <span>ADYARCA</span>
+            </a>
+            <p class="edition">Brochure / 2026</p>
+        </header>
+
+        <section class="viewer" aria-label="Brochure interactivo">
+            <div id="loading-state" class="loading-state" role="status">
+                <span class="loading-line"></span>
+                <span>Preparando la edición</span>
+            </div>
+
+            <div id="book" class="book" aria-live="polite"></div>
+
+            <div id="error-state" class="error-state" role="alert" hidden>
+                <strong>No pudimos abrir el brochure.</strong>
+                <button id="retry-button" class="retry-button" type="button">Reintentar</button>
+            </div>
+        </section>
+
+        <nav class="book-controls" aria-label="Navegación de páginas">
+            <button id="previous-page" class="icon-button" type="button" aria-label="Página anterior" title="Página anterior" disabled>
+                <i data-lucide="arrow-left" aria-hidden="true"></i>
+            </button>
+            <span id="page-indicator" class="page-indicator" aria-live="polite">00 / 00</span>
+            <button id="next-page" class="icon-button" type="button" aria-label="Página siguiente" title="Página siguiente" disabled>
+                <i data-lucide="arrow-right" aria-hidden="true"></i>
+            </button>
+        </nav>
+    </main>
+
+    <a class="download-fab" href="assets/pdf/brochure.pdf" download="brochure-adyarca.pdf">
+        <i data-lucide="download" aria-hidden="true"></i>
+        <span>Descargar Brochure PDF</span>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+    <script src="assets/js/main.js" defer></script>
+</body>
+</html>
