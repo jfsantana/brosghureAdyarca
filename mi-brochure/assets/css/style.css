@@ -181,8 +181,8 @@ a:focus-visible {
     object-fit: contain;
     object-position: left center;
     filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.8));
-     margin-top: -19px;          /* sube o baja */
-    transform: translateY(-20px); /* ajuste fino */
+     margin-top: -20px;          /* sube o baja */
+    transform: translateX(-20px) translateY(-25px);
 }
 
 .cover-company {
@@ -213,7 +213,7 @@ a:focus-visible {
     line-height: 1.15;
     text-transform: uppercase;
     text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.95), 0 0 6px rgba(0, 0, 0, 0.7);
-        transform: translateY(-60px); /* ajuste fino */
+        transform: translateY(-70px); /* ajuste fino */
 }
 
 .cover-team-container {
@@ -253,6 +253,7 @@ a:focus-visible {
     object-fit: contain;
     object-position: center;
     filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.35)) drop-shadow(0 12px 20px rgba(0, 0, 0, 0.7));
+    transform: translateY(-30px); /* ajuste fino */
 }
 
 .cover-bottom {
