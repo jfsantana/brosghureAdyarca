@@ -19,6 +19,22 @@ function appendTextElement(parent, tagName, className, text) {
     return element;
 }
 
+function createBrandHeader(page) {
+    const header = document.createElement('div');
+    header.className = 'page-brand-header';
+
+    const logo = document.createElement('img');
+    logo.className = 'cover-brand';
+    logo.src = new URL('assets/img/ADYAR INDUSTRIES-02.png', document.baseURI).href;
+    logo.alt = 'ADYAR Industries';
+    header.append(logo);
+
+    const company = appendTextElement(header, 'p', 'cover-company', page.company || 'ADYAR INDUSTRIES, C.A.');
+    company.setAttribute('aria-label', page.company || 'ADYAR INDUSTRIES, C.A.');
+
+    return header;
+}
+
 function appendContactLinks(container, page) {
     const links = document.createElement('div');
     links.className = 'contact-links';
@@ -42,11 +58,24 @@ function appendContactLinks(container, page) {
 
 function createPage(page, index, pageCount) {
     const pageElement = document.createElement('article');
-    pageElement.className = `page page--${page.type}`;
+    const pageClass = String(page.id).toLowerCase().replace(/[^a-z0-9-]/g, '-');
+    pageElement.className = `page page--${page.type} page--${pageClass}`;
     pageElement.dataset.density = page.type === 'cover' || index === pageCount - 1 ? 'hard' : 'soft';
 
     const content = document.createElement('div');
     content.className = 'page-content';
+
+    if (page.background && page.type !== 'cover') {
+        const background = document.createElement('div');
+        background.className = 'page-background';
+        const backgroundUrl = new URL(page.background, document.baseURI).href;
+        const backgroundImage = document.createElement('img');
+        backgroundImage.className = 'page-background-image';
+        backgroundImage.src = backgroundUrl;
+        backgroundImage.alt = '';
+        background.append(backgroundImage);
+        content.append(background);
+    }
 
     if (page.type === 'cover') {
         const background = document.createElement('div');
@@ -137,20 +166,75 @@ function createPage(page, index, pageCount) {
         return pageElement;
     }
 
+    content.append(createBrandHeader(page));
+
     const copy = document.createElement('div');
     copy.className = 'page-copy';
+
+    if (page.firmaSeo) {
+        const signature = document.createElement('img');
+        signature.className = 'page-signature';
+        signature.src = new URL(page.firmaSeo, document.baseURI).href;
+        signature.alt = 'Firma de Adrián Seo';
+        copy.append(signature);
+    }
+
     appendTextElement(copy, 'p', 'page-eyebrow', page.name);
     appendTextElement(copy, 'h2', 'page-title', page.title);
-    appendTextElement(copy, 'p', 'page-text', page.text);
+
+    if (page.valoresImg) {
+        const valuesImage = document.createElement('img');
+        valuesImage.className = 'page-values-image';
+        valuesImage.src = new URL(page.valoresImg, document.baseURI).href;
+        valuesImage.alt = 'Valores de ADYAR Industries';
+        copy.append(valuesImage);
+    }
+
+    if (page.SubTitleText) {
+        const detail = document.createElement('div');
+        detail.className = 'page-detail';
+        appendTextElement(detail, 'h3', 'page-subtitle', page.SubTitleText);
+        appendTextElement(detail, 'p', 'page-text', page.text);
+        copy.append(detail);
+    } else if (page.text) {
+        appendTextElement(copy, 'p', 'page-text', page.text);
+    }
 
     if (Array.isArray(page.sections)) {
         const sections = document.createElement('div');
         sections.className = 'page-sections';
         page.sections.forEach((section) => {
-            appendTextElement(sections, 'h3', 'section-title', section.title);
-            appendTextElement(sections, 'p', 'section-text', section.text);
+            const sectionItem = document.createElement('div');
+            sectionItem.className = 'page-section';
+
+            const icon = document.createElement('div');
+            icon.className = 'page-section-icon';
+            const isVision = section.title.toLowerCase().includes('visi');
+            icon.innerHTML = `<i data-lucide="${isVision ? 'globe-2' : 'settings'}" aria-hidden="true"></i>`;
+
+            const sectionBody = document.createElement('div');
+            sectionBody.className = 'page-section-body';
+            appendTextElement(sectionBody, 'h3', 'section-title', section.title);
+            appendTextElement(sectionBody, 'p', 'section-text', section.text);
+
+            sectionItem.append(icon, sectionBody);
+            sections.append(sectionItem);
         });
         copy.append(sections);
+    }
+
+    const galleryImages = [page.Imagen1, page.Imagen2, page.Imagen3].filter(Boolean);
+    if (galleryImages.length > 0) {
+        const gallery = document.createElement('div');
+        gallery.className = 'page-gallery';
+        galleryImages.forEach((imagePath, imageIndex) => {
+            const image = document.createElement('img');
+            image.className = `page-gallery-image page-gallery-image--${imageIndex + 1}`;
+            image.src = new URL(imagePath, document.baseURI).href;
+            image.alt = `Instalaciones de ADYAR Industries ${imageIndex + 1}`;
+            gallery.append(image);
+        });
+        copy.append(gallery);
     }
 
     appendTextElement(content, 'span', 'page-number', String(index + 1).padStart(2, '0'));
