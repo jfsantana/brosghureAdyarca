@@ -45,8 +45,8 @@ a:focus-visible {
     min-height: 100vh;
     display: grid;
     grid-template-rows: auto minmax(0, 1fr) auto;
-    gap: 18px;
-    padding: 24px clamp(18px, 4vw, 64px) 28px;
+    gap: 10px;
+    padding: 12px clamp(18px, 3vw, 48px) 12px;
 }
 
 .topbar {
@@ -54,7 +54,7 @@ a:focus-visible {
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid var(--line);
-    padding-bottom: 14px;
+    padding-bottom: 7px;
 }
 
 .brand {
@@ -70,13 +70,16 @@ a:focus-visible {
 
 .brand-mark {
     display: grid;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
     place-items: center;
-    color: var(--paper);
-    background: var(--ink);
-    font-family: "Playfair Display", serif;
-    font-size: 1.05rem;
+}
+
+.brand-mark-image {
+    display: block;
+    width: 100%;
+    height: auto;
 }
 
 .edition {
@@ -96,7 +99,7 @@ a:focus-visible {
 
 .book {
     width: min(100%, calc(var(--page-width) * 2));
-    height: min(72vh, var(--page-height));
+    height: clamp(320px, 88dvh, var(--page-height));
     filter: drop-shadow(0 22px 24px rgba(23, 32, 28, 0.18));
     opacity: 0;
     transform: translateY(14px);
@@ -1215,6 +1218,8 @@ a.closing-contact-value:hover {
 
 @media (max-width: 700px) {
     .brochure-shell {
+        height: auto;
+        min-height: 100vh;
         gap: 12px;
         padding: 16px 12px 80px;
     }

@@ -414,7 +414,7 @@ function initializePageFlip() {
         size: 'stretch',
         minWidth: 280,
         maxWidth: 560,
-        minHeight: 380,
+        minHeight: 320,
         maxHeight: 760,
         maxShadowOpacity: 0.45,
         showCover: true,
@@ -425,6 +425,8 @@ function initializePageFlip() {
     });
 
     pageFlip.loadFromHTML(document.querySelectorAll('.page'));
+    pageFlip.getPage(0).setDensity('soft');
+    pageFlip.getPage(pageFlip.getPageCount() - 1).setDensity('soft');
     pageFlip.on('flip', (event) => updateControls(event.data));
     pageFlip.on('changeOrientation', () => updateControls(pageFlip.getCurrentPageIndex()));
 }

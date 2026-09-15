@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Brochure digital interactivo de ADYARCA">
     <title>ADYARCA | Brochure Digital</title>
+    <link rel="icon" type="image/png" href="assets/img/inconoSite.png">
+    <link rel="apple-touch-icon" href="assets/img/inconoSite.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&amp;family=Playfair+Display:ital,wght@0,600;1,600&amp;display=swap" rel="stylesheet">
@@ -14,7 +16,9 @@
     <main class="brochure-shell">
         <header class="topbar">
             <a class="brand" href="index.html" aria-label="ADYARCA, inicio">
-                <span class="brand-mark">A</span>
+                <span class="brand-mark" aria-hidden="true">
+                    <img class="brand-mark-image" src="assets/img/inconoSite.png" alt="">
+                </span>
                 <span>ADYARCA</span>
             </a>
             <p class="edition">Brochure / 2026</p>
@@ -47,7 +51,7 @@
 
     <button id="download-pdf" class="download-fab" type="button">
         <i data-lucide="download" aria-hidden="true"></i>
-        <span>Descargar Brochure PDF</span>
+        <span>PDF</span>
     </button>
 
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
