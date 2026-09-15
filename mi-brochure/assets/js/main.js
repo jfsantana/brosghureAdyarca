@@ -12,6 +12,12 @@ const downloadButton = document.querySelector('#download-pdf');
 let pageFlip = null;
 let totalPages = 0;
 
+function prepareSoftEdgePages() {
+    if (!pageFlip) return;
+    pageFlip.getPage(0).setDensity('soft');
+    pageFlip.getPage(pageFlip.getPageCount() - 1).setDensity('soft');
+}
+
 function waitForImages(container) {
     return Promise.all(Array.from(container.querySelectorAll('img')).map((image) => {
         if (image.complete && image.naturalWidth > 0) return Promise.resolve();
@@ -403,6 +409,16 @@ function updateControls(pageIndex = 0) {
     nextButton.disabled = pageIndex >= totalPages - 1;
 }
 
+function updateMobilePageScale() {
+    if (!pageFlip || !window.matchMedia('(max-width: 700px)').matches) {
+        bookElement.style.removeProperty('--mobile-page-scale');
+        return;
+    }
+
+    const pageWidth = pageFlip.getBoundsRect().pageWidth;
+    bookElement.style.setProperty('--mobile-page-scale', String(pageWidth / 560));
+}
+
 function initializePageFlip() {
     if (!window.St?.PageFlip) {
         throw new Error('La librería PageFlip no está disponible.');
@@ -425,10 +441,12 @@ function initializePageFlip() {
     });
 
     pageFlip.loadFromHTML(document.querySelectorAll('.page'));
-    pageFlip.getPage(0).setDensity('soft');
-    pageFlip.getPage(pageFlip.getPageCount() - 1).setDensity('soft');
     pageFlip.on('flip', (event) => updateControls(event.data));
-    pageFlip.on('changeOrientation', () => updateControls(pageFlip.getCurrentPageIndex()));
+    pageFlip.on('changeOrientation', () => {
+        updateControls(pageFlip.getCurrentPageIndex());
+        updateMobilePageScale();
+    });
+    updateMobilePageScale();
 }
 
 async function loadBrochure() {
@@ -467,7 +485,7 @@ async function loadBrochure() {
         initializePageFlip();
         updateControls();
         loadingState.hidden = true;
-        requestAnimationFrame(() => bookElement.classList.add('is-ready'));
+        window.setTimeout(() => bookElement.classList.add('is-ready'), 0);
     } catch (error) {
         console.error(error);
         loadingState.hidden = true;
@@ -475,8 +493,14 @@ async function loadBrochure() {
     }
 }
 
-previousButton.addEventListener('click', () => pageFlip?.flipPrev());
-nextButton.addEventListener('click', () => pageFlip?.flipNext());
+previousButton.addEventListener('click', () => {
+    prepareSoftEdgePages();
+    pageFlip?.flipPrev();
+});
+nextButton.addEventListener('click', () => {
+    prepareSoftEdgePages();
+    pageFlip?.flipNext();
+});
 retryButton.addEventListener('click', loadBrochure);
 downloadButton.addEventListener('click', () => {
     downloadBrochurePdf().catch((error) => {
@@ -485,11 +509,21 @@ downloadButton.addEventListener('click', () => {
     });
 });
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowLeft') pageFlip?.flipPrev();
-    if (event.key === 'ArrowRight') pageFlip?.flipNext();
+    if (event.key === 'ArrowLeft') {
+        prepareSoftEdgePages();
+        pageFlip?.flipPrev();
+    }
+    if (event.key === 'ArrowRight') {
+        prepareSoftEdgePages();
+        pageFlip?.flipNext();
+    }
 });
+
+bookElement.addEventListener('pointerdown', prepareSoftEdgePages, { capture: true });
 
 window.addEventListener('DOMContentLoaded', () => {
     window.lucide?.createIcons();
     loadBrochure();
 });
+
+window.addEventListener('resize', updateMobilePageScale);

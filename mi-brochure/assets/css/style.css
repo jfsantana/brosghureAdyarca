@@ -1207,6 +1207,12 @@ a.closing-contact-value:hover {
     max-height: 72px !important;
 }
 
+.pdf-export-page .page-content {
+    width: 100% !important;
+    height: 100% !important;
+    transform: none !important;
+}
+
 [hidden] {
     display: none !important;
 }
@@ -1229,8 +1235,15 @@ a.closing-contact-value:hover {
         height: min(70vh, var(--page-height));
     }
 
+    .page-content {
+        width: 560px;
+        height: 760px;
+        transform: scale(var(--mobile-page-scale, 0.65));
+        transform-origin: top left;
+    }
+
     .page-title {
-        font-size: clamp(2rem, 9vw, 3.4rem);
+        font-size: 1.8rem;
     }
 
     .download-fab {
