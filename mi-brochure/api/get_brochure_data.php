@@ -119,33 +119,95 @@ $brochure = [
                 ['title' => 'Clientes Atendidos', 'text' => '10K+'],
                 ['title' => 'Importaciones Anuales', 'text' => '1500+ Ton.'],
                 ],
+            
         ],
         [
             'id' => 'Page3',
             'name' => 'Nuestros Servicios',
             'type' => 'content',
             'title' => 'NUESTRO SERVICIOS',
-            'text' => 'Contenido pendiente de desarrollar.',
-            'background' => 'assets/img/fondopagina2.png',
+            'text' => 'Soluciones Integrales para su Cadena de Suministros',
+            'background' => 'assets/img/pagina3.jpg',
             'company' => 'ADYAR INDUSTRIES, C.A.',
+            'sections' => [
+                [
+                    'number' => '01',
+                    'image' => 'assets/img/ImportacionMateriaPrima.jpg',
+                    'title' => 'Importacion de Materia Prima',
+                    'text' => 'Importamos materias Primas desde diversos países para garantizar la calidad y disponibilidad de nuestros productos.'
+                ],
+                [
+                    'number' => '02',
+                    'image' => 'assets/img/distribuciobn.jpg',
+                    'title' => 'Distribucion Nacional',
+                    'text' => 'Distribuimos materias primas a nivel nacional asegurando la eficiencia y puntualidad en la entrega de nuestros productos.'
+                ],
+                ],
         ],
         [
             'id' => 'Page4',
-            'name' => 'Page4',
+            'name' => 'Nuestros Servicios',
             'type' => 'content',
-            'title' => 'Nuestros Servicios 2/2',
-            'text' => 'Contenido pendiente de desarrollar.',
-            'background' => 'assets/img/fondopagina2.png',
+            'title' => 'Nuestros Servicios',
+            'text' => 'Soluciones Integrales para su Cadena de Suministros',
+            'background' => 'assets/img/pagina4.jpg',
             'company' => 'ADYAR INDUSTRIES, C.A.',
+            'sections' => [
+                [
+                    'number' => '03',
+                    'image' => 'assets/img/asesoriaPersonalizada.jpg',
+                    'title' => 'Asesoria Personalizada',
+                    'text' => 'Ofrecemos asesoría personalizada para optimizar la gestión de su cadena de suministros.'
+                ],
+                [
+                    'number' => '04',
+                    'image' => 'assets/img/soporteTecnoico.jpg',
+                    'title' => 'Soporte Tecnico',
+                    'text' => 'Brindamos soporte técnico especializado para garantizar el correcto funcionamiento de su cadena de suministros.'
+                ],
+                ],
         ],
         [
             'id' => 'Page5',
-            'name' => 'Page5',
+            'name' => 'Contactos',
             'type' => 'content',
             'title' => 'Contactos',
-            'text' => 'Contenido pendiente de desarrollar.',
-            'background' => 'assets/img/fondopagina2.png',
+            'text' => 'Somos tu mejor aliado',
+            'background' => 'assets/img/contact.jpg',
             'company' => 'ADYAR INDUSTRIES, C.A.',
+            'sections' => [
+                [
+                    'title' => 'Celular',
+                    'text' => '+58 412-3456789'
+                ],
+                                [
+                    'title' => 'Direccion',
+                    'text' => 'Centro Comercial Concepto la Granja, Piso 7, Oficina 02, Avenida Salvador Feo La Cruz (Norte-Sur), en el Municipio Naguanagua del Estado Carabobo, Venezuela'
+                ],
+                                [
+                    'title' => 'Email',
+                    'text' => 'comercializacion@adyarca.com'
+                ],
+                                [
+                    'title' => 'Pagina Web',
+                    'text' => 'https://adyarca.com/'
+                ],
+                                [
+                    'title' => 'Instagram',
+                    'text' => '@adyarca'
+                ],
+                                [
+                    'title' => 'Facebook',
+                    'text' => 'facebook.com/adyarca'
+                ],
+                                [
+                    'title' => 'LinkedIn',
+                    'text' => 'linkedin.com/company/adyarca'
+                ],
+
+                ],
+
+            'ImagenCentral' => 'assets/img/ADYAR INDUSTRIES-01.png',
         ],
     ],
 ];

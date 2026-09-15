@@ -7,9 +7,75 @@ const retryButton = document.querySelector('#retry-button');
 const previousButton = document.querySelector('#previous-page');
 const nextButton = document.querySelector('#next-page');
 const pageIndicator = document.querySelector('#page-indicator');
+const downloadButton = document.querySelector('#download-pdf');
 
 let pageFlip = null;
 let totalPages = 0;
+
+function waitForImages(container) {
+    return Promise.all(Array.from(container.querySelectorAll('img')).map((image) => {
+        if (image.complete && image.naturalWidth > 0) return Promise.resolve();
+
+        return new Promise((resolve, reject) => {
+            image.addEventListener('load', resolve, { once: true });
+            image.addEventListener('error', reject, { once: true });
+        });
+    }));
+}
+
+async function downloadBrochurePdf() {
+    if (!window.html2canvas || !window.jspdf?.jsPDF) {
+        throw new Error('Las herramientas para generar el PDF no están disponibles.');
+    }
+
+    const label = downloadButton.querySelector('span');
+    const originalLabel = label.textContent;
+    downloadButton.disabled = true;
+    label.textContent = 'Generando PDF...';
+
+    const exportStage = document.createElement('div');
+    exportStage.className = 'pdf-export-stage';
+    document.body.append(exportStage);
+
+    try {
+        await document.fonts.ready;
+        const sourcePages = Array.from(bookElement.querySelectorAll('.page'));
+        const pdf = new window.jspdf.jsPDF({
+            orientation: 'portrait',
+            unit: 'px',
+            format: [560, 760],
+            hotfixes: ['px_scaling'],
+        });
+
+        for (const [pageIndex, sourcePage] of sourcePages.entries()) {
+            const pageClone = sourcePage.cloneNode(true);
+            pageClone.removeAttribute('style');
+            pageClone.classList.add('pdf-export-page');
+            exportStage.replaceChildren(pageClone);
+            await waitForImages(pageClone);
+
+            const canvas = await window.html2canvas(pageClone, {
+                width: 560,
+                height: 760,
+                windowWidth: 1120,
+                windowHeight: 760,
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                logging: false,
+            });
+
+            if (pageIndex > 0) pdf.addPage([560, 760], 'portrait');
+            pdf.addImage(canvas.toDataURL('image/jpeg', 0.94), 'JPEG', 0, 0, 560, 760);
+        }
+
+        pdf.save('brochure-adyarca.pdf');
+    } finally {
+        exportStage.remove();
+        downloadButton.disabled = false;
+        label.textContent = originalLabel;
+    }
+}
 
 function appendTextElement(parent, tagName, className, text) {
     const element = document.createElement(tagName);
@@ -60,7 +126,7 @@ function createPage(page, index, pageCount) {
     const pageElement = document.createElement('article');
     const pageClass = String(page.id).toLowerCase().replace(/[^a-z0-9-]/g, '-');
     pageElement.className = `page page--${page.type} page--${pageClass}`;
-    pageElement.dataset.density = page.type === 'cover' || index === pageCount - 1 ? 'hard' : 'soft';
+    pageElement.dataset.density = 'soft';
 
     const content = document.createElement('div');
     content.className = 'page-content';
@@ -166,10 +232,78 @@ function createPage(page, index, pageCount) {
         return pageElement;
     }
 
-    content.append(createBrandHeader(page));
+    if (!page.ImagenCentral) {
+        content.append(createBrandHeader(page));
+    }
 
     const copy = document.createElement('div');
     copy.className = 'page-copy';
+
+    if (page.ImagenCentral) {
+        copy.classList.add('closing-copy');
+        appendTextElement(copy, 'h2', 'closing-title', page.title);
+        appendTextElement(copy, 'p', 'closing-tagline', page.text);
+
+        const centralLogo = document.createElement('img');
+        centralLogo.className = 'closing-logo';
+        centralLogo.src = new URL(page.ImagenCentral, document.baseURI).href;
+        centralLogo.alt = 'ADYAR Industries';
+        copy.append(centralLogo);
+
+        const contacts = document.createElement('div');
+        contacts.className = 'closing-contacts';
+        const contactIcons = {
+            celular: 'phone',
+            direccion: 'map-pin',
+            email: 'mail',
+            'pagina web': 'globe-2',
+            instagram: 'instagram',
+            facebook: 'facebook',
+            linkedin: 'linkedin',
+        };
+
+        page.sections?.forEach((section) => {
+            const card = document.createElement('div');
+            const normalizedTitle = section.title.toLowerCase();
+            const contactClass = normalizedTitle.replace(/[^a-z0-9]+/g, '-');
+            card.className = `closing-contact closing-contact--${contactClass}`;
+            const icon = document.createElement('span');
+            icon.className = 'closing-contact-icon';
+            icon.innerHTML = `<i data-lucide="${contactIcons[normalizedTitle] || 'circle-dot'}" aria-hidden="true"></i>`;
+
+            const body = document.createElement('div');
+            body.className = 'closing-contact-body';
+            appendTextElement(body, 'strong', 'closing-contact-title', section.title);
+
+            let value;
+            if (normalizedTitle === 'celular') {
+                value = document.createElement('a');
+                value.href = `tel:${section.text.replace(/[^+\d]/g, '')}`;
+            } else if (normalizedTitle === 'email') {
+                value = document.createElement('a');
+                value.href = `mailto:${section.text}`;
+            } else if (['pagina web', 'instagram', 'facebook', 'linkedin'].includes(normalizedTitle)) {
+                value = document.createElement('a');
+                value.href = section.text.startsWith('http') ? section.text : `https://${section.text.replace(/^@/, 'instagram.com/')}`;
+                value.target = '_blank';
+                value.rel = 'noopener noreferrer';
+            } else {
+                value = document.createElement('span');
+            }
+            value.className = 'closing-contact-value';
+            value.textContent = section.text;
+            body.append(value);
+            card.append(icon, body);
+            contacts.append(card);
+        });
+
+        copy.append(contacts);
+        appendTextElement(copy, 'p', 'page-eyebrow', page.name);
+        appendTextElement(content, 'span', 'page-number', String(index + 1).padStart(2, '0'));
+        content.append(copy);
+        pageElement.append(content);
+        return pageElement;
+    }
 
     if (page.firmaSeo) {
         const signature = document.createElement('img');
@@ -202,10 +336,29 @@ function createPage(page, index, pageCount) {
 
     if (Array.isArray(page.sections)) {
         const sections = document.createElement('div');
-        sections.className = 'page-sections';
+        const hasServiceCards = page.sections.some((section) => section.image);
+        sections.className = hasServiceCards ? 'page-sections service-cards' : 'page-sections';
         page.sections.forEach((section) => {
             const sectionItem = document.createElement('div');
-            sectionItem.className = 'page-section';
+            sectionItem.className = hasServiceCards ? 'page-section service-card' : 'page-section';
+
+            if (hasServiceCards) {
+                const serviceImage = document.createElement('img');
+                serviceImage.className = 'service-card-image';
+                serviceImage.src = new URL(section.image, document.baseURI).href;
+                serviceImage.alt = section.title;
+
+                const serviceBody = document.createElement('div');
+                serviceBody.className = 'service-card-body';
+                appendTextElement(serviceBody, 'span', 'service-card-badge', section.number);
+                appendTextElement(serviceBody, 'h3', 'service-card-title', section.title);
+                appendTextElement(serviceBody, 'p', 'service-card-text', section.text);
+                appendTextElement(serviceBody, 'span', 'service-card-number', section.number);
+
+                sectionItem.append(serviceImage, serviceBody);
+                sections.append(sectionItem);
+                return;
+            }
 
             const icon = document.createElement('div');
             icon.className = 'page-section-icon';
@@ -323,6 +476,12 @@ async function loadBrochure() {
 previousButton.addEventListener('click', () => pageFlip?.flipPrev());
 nextButton.addEventListener('click', () => pageFlip?.flipNext());
 retryButton.addEventListener('click', loadBrochure);
+downloadButton.addEventListener('click', () => {
+    downloadBrochurePdf().catch((error) => {
+        console.error(error);
+        window.alert('No se pudo generar el PDF. Inténtalo nuevamente.');
+    });
+});
 document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowLeft') pageFlip?.flipPrev();
     if (event.key === 'ArrowRight') pageFlip?.flipNext();
