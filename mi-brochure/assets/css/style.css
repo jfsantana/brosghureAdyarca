@@ -1246,6 +1246,33 @@ a.closing-contact-value:hover {
         font-size: 1.8rem;
     }
 
+    .book-controls {
+        position: relative;
+        z-index: 20;
+        gap: 20px;
+        transform: translateY(-28px);
+    }
+
+    .icon-button {
+        width: 48px;
+        height: 48px;
+        border-color: rgba(23, 32, 28, 0.26);
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 5px 14px rgba(23, 32, 28, 0.16);
+    }
+
+    .icon-button svg {
+        width: 22px;
+        height: 22px;
+        stroke-width: 2.2;
+    }
+
+    .page-indicator {
+        min-width: 76px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
     .download-fab {
         right: 12px;
         bottom: 12px;
