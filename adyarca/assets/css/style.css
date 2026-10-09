@@ -933,6 +933,8 @@ a.closing-contact-value:hover {
     font-size: clamp(0.62rem, 1.05vh, 0.75rem);
     font-weight: 400;
     line-height: 1.25;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 .service-card-number {
