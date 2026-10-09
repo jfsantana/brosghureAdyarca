@@ -205,6 +205,7 @@ a:focus-visible {
     width: min(82%, 560px);
     height: auto;
     max-height: 100px;
+    flex-shrink: 0;
     object-fit: contain;
     object-position: left center;
     filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.8));
@@ -657,13 +658,41 @@ a.closing-contact-value:hover {
 }
 
 .page--page1 .page-detail {
+    position: relative;
+    isolation: isolate;
     grid-column: 2;
     grid-row: 2;
     width: 100%; /* Ajusta el ancho del bloque. */
     max-width: 190px;
     margin-top: 0; /* Ajusta para subir o bajar solo Sobre Nosotros y su texto. */
-    color: #111;
-    text-shadow: 0 0 2px rgba(255, 255, 255, 0.95), 0 1px 3px rgba(255, 255, 255, 0.8);
+}
+
+.page--page1 .page-detail::before {
+    position: absolute;
+    inset: 27px -8px -8px;
+    z-index: -1;
+    border-radius: 20px;
+    background: radial-gradient(
+        ellipse at 48% 40%,
+        rgba(8, 23, 34, 0.9) 0%,
+        rgba(8, 23, 34, 0.68) 58%,
+        rgba(8, 23, 34, 0) 100%
+    );
+    content: "";
+    filter: blur(5px);
+    pointer-events: none;
+}
+
+.page--page1 .page-subtitle {
+    position: relative;
+    margin-bottom: 8px;
+    color: #ff9a5c;
+    font-family: "DM Sans", sans-serif;
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
 }
 
 .page--page1 .page-title {
@@ -703,14 +732,17 @@ a.closing-contact-value:hover {
 }
 
 .page--page1 .page-text {
+    display: block;
+    padding: 4px 6px 7px;
+    color: #fff;
     font-size: clamp(0.78rem, 1.35vh, 0.96rem);
     font-weight: 500;
-    line-height: 1.12;
-    text-align: justify;
-    text-justify: inter-word;
+    line-height: 1.32;
     overflow-wrap: normal;
     word-break: normal;
     hyphens: none;
+    text-align: left;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 }
 
 .page-text {
