@@ -78,8 +78,8 @@ $brochure = [
             'text' => 'La Revista de la Materia Prima Química en Venezuela',
             'company' => 'ADYAR INDUSTRIES, C.A.',
             'edition' => 'AÑO 2026, BROCHURE  ·  DISTRIBUCIÓN GRATUITA',
-            'background' => 'assets/img/fondo portara.jpg',
-            'teamImage' => 'assets/img/equipo.png',
+            'background' => 'assets/img/fondo portara.webp',
+            'teamImage' => 'assets/img/equipo.webp',
             'commitment' => 'Soluciones Integrales y Personalizadas',
             'sectors' => 'Materia Prima para Industria Química y Petroquímica',
             'sections' => [
@@ -94,7 +94,7 @@ $brochure = [
             'title' => 'MAS DE 16 AÑOS IMPULSANDO LA INDUSTRIA NACIONAL',
             'SubTitleText' => 'Sobre Nosotros',
             'text' => 'Con una trayectoria sólida de más de 16 años, en Adyar Industries nos hemos consolidado como un referente en la importación y distribución de materias primas de alta calidad para las principales industrias de Venezuela. Nuestra experiencia y conocimiento del mercado nos permiten ofrecer soluciones integrales y personalizadas a nuestros clientes, adaptándonos a sus necesidades específicas y contribuyendo al crecimiento de sus negocios.',
-            'background' => 'assets/img/fondopagina2.png',
+            'background' => 'assets/img/fondopagina2.webp',
             'company' => 'ADYAR INDUSTRIES, C.A.',
             'sections' => [
                 ['title' => 'Misión', 'text' => 'Distribuir y abastecer materias primas de óptima calidad, ofreciendo un excelente servicio al sector productivo industrial, químico y petroquímico del país.'],
@@ -108,11 +108,11 @@ $brochure = [
             'type' => 'content',
             'title' => 'INFRAESTRUCTURA DE CLASE MUNDIAL Y VALORES INQUEBRANTABLES',
             // 'text' => 'Arquitectura, diseño interior, dirección de obra y soluciones integrales para proyectos residenciales y comerciales.',
-            'background' => 'assets/img/pagina2.jpg',
-            'valoresImg' => 'assets/img/valores.png',
-            'Imagen1' => 'assets/img/montacarga1.jpg',
-            'Imagen2' => 'assets/img/DSC08808-Enhanced-NR2.jpg',
-            'Imagen3' => 'assets/img/DSC02377-Enhanced-NR2.jpg',
+            'background' => 'assets/img/pagina2.webp',
+            'valoresImg' => 'assets/img/valores.webp',
+            'Imagen1' => 'assets/img/montacarga1.webp',
+            'Imagen2' => 'assets/img/DSC08808-Enhanced-NR2.webp',
+            'Imagen3' => 'assets/img/DSC02377-Enhanced-NR2.webp',
             'company' => 'ADYAR INDUSTRIES, C.A.',
             'sections' => [
                 ['title' => 'Clientes Satisfechos', 'text' => '99%'],
@@ -127,18 +127,18 @@ $brochure = [
             'type' => 'content',
             'title' => 'NUESTROS SERVICIOS',
             'text' => 'Soluciones Integrales para su Cadena de Suministros',
-            'background' => 'assets/img/pagina3.jpg',
+            'background' => 'assets/img/pagina3.webp',
             'company' => 'ADYAR INDUSTRIES, C.A.',
             'sections' => [
                 [
                     'number' => '01',
-                    'image' => 'assets/img/ImportacionMateriaPrima.jpg',
+                    'image' => 'assets/img/servicio1.webp',
                     'title' => 'Importacion de Materia Prima',
                     'text' => 'Importamos materias Primas desde diversos países para garantizar la calidad y disponibilidad de nuestros productos.'
                 ],
                 [
                     'number' => '02',
-                    'image' => 'assets/img/distribuciobn.jpg',
+                    'image' => 'assets/img/servicio2.webp',
                     'title' => 'Distribucion Nacional',
                     'text' => 'Distribuimos materias primas a nivel nacional asegurando la eficiencia y puntualidad en la entrega de nuestros productos.'
                 ],
@@ -150,18 +150,18 @@ $brochure = [
             'type' => 'content',
             'title' => 'Nuestros Servicios',
             'text' => 'Soluciones Integrales para su Cadena de Suministros',
-            'background' => 'assets/img/pagina4.jpg',
+            'background' => 'assets/img/pagina4.webp',
             'company' => 'ADYAR INDUSTRIES, C.A.',
             'sections' => [
                 [
                     'number' => '03',
-                    'image' => 'assets/img/asesoriaPersonalizada.jpg',
+                    'image' => 'assets/img/asesoriaPersonalizada.webp',
                     'title' => 'Asesoria Personalizada',
                     'text' => 'Ofrecemos asesoría personalizada para optimizar la gestión de su cadena de suministros.'
                 ],
                 [
                     'number' => '04',
-                    'image' => 'assets/img/soporteTecnoico.jpg',
+                    'image' => 'assets/img/soporteTecnoico.webp',
                     'title' => 'Soporte Tecnico',
                     'text' => 'Brindamos soporte técnico especializado para garantizar el correcto funcionamiento de su cadena de suministros.'
                 ],
@@ -173,16 +173,16 @@ $brochure = [
             'type' => 'content',
             'title' => 'Contactos',
             'text' => 'Somos tu mejor aliado',
-            'background' => 'assets/img/contact.jpg',
+            'background' => 'assets/img/contact.webp',
             'company' => 'ADYAR INDUSTRIES, C.A.',
             'sections' => [
                 [
                     'title' => 'Celular',
-                    'text' => '+58 412-3456789'
+                    'text' => '+58 412-2470882'
                 ],
                                 [
                     'title' => 'Direccion',
-                    'text' => 'Centro Comercial Concepto la Granja, Piso 7, Oficina 02, Avenida Salvador Feo La Cruz (Norte-Sur), en el Municipio Naguanagua del Estado Carabobo, Venezuela'
+                    'text' => 'AV FEO LA CRUZ CC CONCEPTO LA GRANJA TORRE EMPRESARIA NIVEL 7 OF 7-03 ZONA - NAGUANAGUA CARABOBO ZONA POSTAL 2001'
                 ],
                                 [
                     'title' => 'Email',
@@ -198,7 +198,7 @@ $brochure = [
                 ],
                                 [
                     'title' => 'Facebook',
-                    'text' => 'facebook.com/adyarca'
+                    'text' => 'facebook.com/adyarca.nino'
                 ],
                                 [
                     'title' => 'LinkedIn',
@@ -207,7 +207,7 @@ $brochure = [
 
                 ],
 
-            'ImagenCentral' => 'assets/img/ADYAR INDUSTRIES-01.png',
+            'ImagenCentral' => 'assets/img/ADYAR INDUSTRIES-01.webp',
         ],
     ],
 ];
